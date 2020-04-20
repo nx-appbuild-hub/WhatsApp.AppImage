@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=WhatsApp
+Comment=Unofficial whatsapp client for linux
+Exec=AppRun %U
+Terminal=false
+Type=Application
+Icon=icon
+StartupWMClass=whatsapp
+Categories=Network;
