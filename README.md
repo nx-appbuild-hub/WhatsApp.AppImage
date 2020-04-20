@@ -1,2 +1,1 @@
-# Skype.AppImage
 # WhatsApp.AppImage
