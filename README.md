@@ -1,0 +1,2 @@
+# Skype.AppImage
+# WhatsApp.AppImage
