@@ -1,4 +1,4 @@
-SOURCE="https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.2.18_amd64.deb"
+SOURCE="https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.3.1_amd64.deb"
 DESTINATION="build.deb"
 OUTPUT="WhatsApp.AppImage"
 
