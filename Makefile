@@ -13,31 +13,35 @@ PWD:=$(shell pwd)
 
 all: clean
 
-	mkdir --parents $(PWD)/build
-	mkdir --parents $(PWD)/build/AppDir
-	mkdir --parents $(PWD)/build/AppDir/whatsdesk
+	mkdir --parents $(PWD)/build/Boilerplate.AppDir/whatsdesk
+	apprepo --destination=$(PWD)/build appdir boilerplate libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
+
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'LD_LIBRARY_PATH=$${LD_LIBRARY_PATH}:$${APPDIR}/whatsdesk' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'export LD_LIBRARY_PATH=$${LD_LIBRARY_PATH}' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo '' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+	echo 'exec $${APPDIR}/whatsdesk/whatsdesk "$${@}"' >> $(PWD)/build/Boilerplate.AppDir/AppRun
+
 
 	wget --output-document=$(PWD)/build/build.deb https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.3.8_amd64.deb
 	dpkg -x $(PWD)/build/build.deb $(PWD)/build
 
-	wget --output-document=$(PWD)/build/build.rpm https://ftp.lysator.liu.se/pub/opensuse/distribution/leap/15.2/repo/oss/x86_64/libatk-1_0-0-2.34.1-lp152.1.7.x86_64.rpm
-	cd $(PWD)/build && rpm2cpio $(PWD)/build/build.rpm | cpio -idmv && cd ..
+	cp --force --recursive $(PWD)/build/usr/*            $(PWD)/build/Boilerplate.AppDir/
+	cp --force --recursive $(PWD)/build/opt/whatsdesk/*  $(PWD)/build/Boilerplate.AppDir/whatsdesk
+	cp --force --recursive $(PWD)/AppDir/*               $(PWD)/build/Boilerplate.AppDir
 
-	wget --output-document=$(PWD)/build/build.rpm https://ftp.lysator.liu.se/pub/opensuse/distribution/leap/15.2/repo/oss/x86_64/libatk-bridge-2_0-0-2.34.1-lp152.1.5.x86_64.rpm
-	cd $(PWD)/build && rpm2cpio $(PWD)/build/build.rpm | cpio -idmv && cd ..
+	rm --force $(PWD)/build/Boilerplate.AppDir/*.desktop   || true
+	rm --force $(PWD)/build/Boilerplate.AppDir/*.svg       || true
+	rm --force $(PWD)/build/Boilerplate.AppDir/*.png       || true
 
-	wget --output-document=$(PWD)/build/build.rpm https://ftp.lysator.liu.se/pub/opensuse/distribution/leap/15.2/repo/oss/x86_64/libatspi0-2.34.0-lp152.2.4.x86_64.rpm
-	cd $(PWD)/build && rpm2cpio $(PWD)/build/build.rpm | cpio -idmv && cd ..
+	cp --force $(PWD)/AppDir/*.png       $(PWD)/build/Boilerplate.AppDir/      || true
+	cp --force $(PWD)/AppDir/*.desktop   $(PWD)/build/Boilerplate.AppDir/      || true
+	cp --force $(PWD)/AppDir/*.svg       $(PWD)/build/Boilerplate.AppDir/      || true
 
-	cp --force --recursive $(PWD)/build/usr/* $(PWD)/build/AppDir/
-	cp --force --recursive $(PWD)/build/opt/whatsdesk/* $(PWD)/build/AppDir/whatsdesk
-	cp --force --recursive $(PWD)/AppDir/* $(PWD)/build/AppDir
-
-	chmod +x $(PWD)/build/AppDir/AppRun
-	chmod +x $(PWD)/build/AppDir/*.desktop
-
-	export ARCH=x86_64 && $(PWD)/bin/appimagetool.AppImage $(PWD)/build/AppDir $(PWD)/WhatsApp.AppImage
-	chmod +x $(PWD)/WhatsApp.AppImage
+	export ARCH=x86_64 && $(PWD)/bin/appimagetool.AppImage $(PWD)/build/Boilerplate.AppDir $(PWD)/Whatsapp.AppImage
+	chmod +x $(PWD)/Whatsapp.AppImage
 
 clean:
 	rm -rf $(PWD)/build
