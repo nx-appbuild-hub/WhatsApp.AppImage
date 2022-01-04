@@ -17,7 +17,7 @@ all: clean
 	mkdir --parents $(PWD)/build/AppDir
 	mkdir --parents $(PWD)/build/AppDir/whatsdesk
 
-	wget --output-document=$(PWD)/build/build.deb https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.3.3_amd64.deb
+	wget --output-document=$(PWD)/build/build.deb https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.3.8_amd64.deb
 	dpkg -x $(PWD)/build/build.deb $(PWD)/build
 
 	wget --output-document=$(PWD)/build/build.rpm https://ftp.lysator.liu.se/pub/opensuse/distribution/leap/15.2/repo/oss/x86_64/libatk-1_0-0-2.34.1-lp152.1.7.x86_64.rpm
