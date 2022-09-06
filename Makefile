@@ -25,7 +25,7 @@ all: clean
 	echo 'exec $${APPDIR}/whatsdesk/whatsdesk "$${@}"' >> $(PWD)/build/Boilerplate.AppDir/AppRun
 
 
-	wget --output-document=$(PWD)/build/build.deb https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.3.8_amd64.deb
+	wget --output-document=$(PWD)/build/build.deb https://zerkc.gitlab.io/whatsdesk/whatsdesk_0.3.9_amd64.deb
 	dpkg -x $(PWD)/build/build.deb $(PWD)/build
 
 	cp --force --recursive $(PWD)/build/usr/*            $(PWD)/build/Boilerplate.AppDir/
